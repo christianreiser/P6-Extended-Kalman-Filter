@@ -56,7 +56,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   TODO:
     * update the state by using Extended Kalman Filter equations
   */
-//	MatrixXd Hj(3,4); //		????n cy
+//	MatrixXd Hj(3,4); //ncy
 //	//recover state parameters
 //	float px = ekf_.x_(0);
 //	float py = ekf_.x_(1);
@@ -66,12 +66,12 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
 	//pre-compute a set of terms to avoid repeated calculation
 	float rho = sqrt(x_(0)*x_(0)+x_(1)*x_(1));
 	float phi = atan2(x_(1),x_(0));
-	float rho_dot; //????cy
+	float rho_dot;
 
 //check division by zero
-	if (fabs(rho) < 0.0001) {		//????cy
-	  rho_dot = 0;		//????cy
-	} else {		//????cy
+	if (fabs(rho) < 0.0001) {
+	  rho_dot = 0;		//
+	} else {		//
    rho_dot = (x_(0)*x_(2) + x_(1)*x_(3))/rho;
   }
   VectorXd z_pred(3);
@@ -85,7 +85,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   }	
 
 
-//  VectorXd y = z - H_ * x_;			// residual ????????n cy
+//  VectorXd y = z - H_ * x_;			//ncy
   MatrixXd Ht = H_.transpose();
   MatrixXd S = H_ * P_ * Ht + R_;		// system uncertainty
   MatrixXd Si = S.inverse();
@@ -93,7 +93,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
 
   //new state
   x_ = x_ + (K * y);				// posterior
-  long x_size = x_.size(); //??????? cy
-  MatrixXd I = MatrixXd::Identity(x_size, x_size);//??????? cy
+  long x_size = x_.size();
+  MatrixXd I = MatrixXd::Identity(x_size, x_size);
   P_ = (I - K * H_) * P_;			// posterior variance
 }

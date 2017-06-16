@@ -1,13 +1,19 @@
-project(ExtendedKF)
+include(RegexUtils)
+test_escape_string_as_regex()
 
-cmake_minimum_required (VERSION 3.5)
+file(GLOB Eigen_directory_files "*")
 
-add_definitions(-std=c++0x)
+escape_string_as_regex(ESCAPED_CMAKE_CURRENT_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
-set(sources
-    src/FusionEKF.cpp
-    src/kalman_filter.cpp
-    src/main.cpp
-    src/tools.cpp)
+foreach(f ${Eigen_directory_files})
+  if(NOT f MATCHES "\\.txt" AND NOT f MATCHES "${ESCAPED_CMAKE_CURRENT_SOURCE_DIR}/[.].+" AND NOT f MATCHES "${ESCAPED_CMAKE_CURRENT_SOURCE_DIR}/src")
+    list(APPEND Eigen_directory_files_to_install ${f})
+  endif()
+endforeach(f ${Eigen_directory_files})
 
-add_executable(ExtendedKF ${sources})
+install(FILES
+  ${Eigen_directory_files_to_install}
+  DESTINATION ${INCLUDE_INSTALL_DIR}/Eigen COMPONENT Devel
+  )
+
+add_subdirectory(src)

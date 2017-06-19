@@ -19,13 +19,9 @@ void KalmanFilter::Init(VectorXd &x_in, MatrixXd &P_in, MatrixXd &F_in,
 }	
 
 void KalmanFilter::Predict() {
-  /**
-  TODO:
-    * predict the state
-	for (unsigned int n = 0; n < measurements.size(); ++n) {
 
-		VectorXd z = measurements[n];
-  */
+//predict the state
+
   x_ = F_ * x_;	// + u;		prior
   MatrixXd Ft_ = F_.transpose();
   P_ = F_ * P_ * Ft_ + Q_;	//state variance
@@ -35,10 +31,6 @@ void KalmanFilter::Predict() {
 }  
 
 void KalmanFilter::Update(const VectorXd &z) {		//z is sensor measurement
-  /**
-  TODO:
-    * update the state by using Kalman Filter equations
-  */
   VectorXd y = z - H_ * x_;			// residual
   MatrixXd Ht = H_.transpose();
   MatrixXd S = H_ * P_ * Ht + R_;		// system uncertainty
@@ -52,10 +44,9 @@ void KalmanFilter::Update(const VectorXd &z) {		//z is sensor measurement
 }
 
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
-  /**
-  TODO:
-    * update the state by using Extended Kalman Filter equations
-  */
+
+// update the state by using Extended Kalman Filter equations
+
 //	MatrixXd Hj(3,4); //ncy
 //	//recover state parameters
 //	float px = ekf_.x_(0);

@@ -100,9 +100,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
       //ekf_.x_(1) = y
       ekf_.x_ << 0.8, 0.4, 5, 0.01; 
     }
-      // ekf_.F_<<????? //qa
-      // previous_timestamp_ = measurement_pack.timestamp_; //qa
-    // done initializing, no need to predict or update
+
     previous_timestamp_ = measurement_pack.timestamp_;
     is_initialized_ = true;
     return;
